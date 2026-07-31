@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Export Tabs as Markdown",
-  "version": "1.0",
+  "version": "1.0.0",
   "permissions": ["tabs"],
   "icons": {
     "16": "icon16.png",
