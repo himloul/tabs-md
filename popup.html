@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="container">
+    <div class="bar">
+      <span class="title">Open tabs</span>
+      <span id="count" class="muted"></span>
+      <div class="segmented">
+        <button id="tab-export" class="active">Export</button>
+        <button id="tab-import">Import</button>
+      </div>
+    </div>
+    <div class="list-controls">
+      <input type="checkbox" id="select-all" title="Select all / none" checked>
+      <button id="merge-btn" class="merge-btn" hidden>Merge windows</button>
+    </div>
+    <div id="list"></div>
+    <textarea id="import-text" placeholder="Paste links, one per line or as [title](url) markdown" hidden></textarea>
+    <input type="file" id="import-file" accept=".md,.txt,text/markdown" hidden>
+    <div class="actions">
+      <button id="open-btn" class="primary">Open selected (0)</button>
+      <button id="copy-btn" class="secondary">Copy (0)</button>
+      <button id="file-btn" class="secondary">Download (0)</button>
+      <button id="archive-btn" class="secondary danger" hidden>Archive &amp; close (0)</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
