@@ -61,7 +61,6 @@ const updateLabels = () => {
   if (!mergeBtn.hidden) mergeBtn.textContent = `Merge ${wins} windows`;
   if (mode === 'export') {
     const n = checked;
-    openBtn.textContent = `Open selected (${n})`;
     copyBtn.textContent = `Copy (${n})`;
     fileBtn.textContent = `Download (${n})`;
     archiveBtn.textContent = `Archive & close (${n})`;
@@ -134,7 +133,9 @@ const setMode = (m) => {
   listEl.hidden = m !== 'export';
   listControls.hidden = m !== 'export';
   importEl.hidden = m !== 'import';
+  openBtn.hidden = m !== 'import';
   copyBtn.hidden = m !== 'export';
+  copyBtn.className = m === 'export' ? 'primary' : 'secondary';
   archiveBtn.hidden = m !== 'export';
   document.getElementById('tab-export').classList.toggle('active', m === 'export');
   document.getElementById('tab-import').classList.toggle('active', m === 'import');
@@ -162,15 +163,9 @@ const download = () => {
 };
 
 openBtn.addEventListener('click', async () => {
-  if (mode === 'export') {
-    const urls = selectedRows().map(r => r.url);
-    if (!urls.length) { flash(openBtn, 'Nothing selected'); return; }
-    await chrome.windows.create({ url: urls });
-  } else {
-    const urls = extractUrls(importEl.value);
-    if (!urls.length) { flash(openBtn, 'No links found'); return; }
-    await chrome.windows.create({ url: urls });
-  }
+  const urls = extractUrls(importEl.value);
+  if (!urls.length) { flash(openBtn, 'No links found'); return; }
+  await chrome.windows.create({ url: urls });
 });
 
 copyBtn.addEventListener('click', async () => {
