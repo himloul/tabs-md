@@ -1,38 +1,32 @@
 # tabs-md
 
-Export your open tabs as a markdown list — and bring them back. A tiny MV3
-extension for Brave/Chrome with no background worker, no dependencies, no
-tracking. ~0 MB at rest.
+Open tabs are ephemeral. tabs-md turns them into a durable, readable markdown
+list you can keep anywhere and reopen later.
 
-## Features
+Works in Brave and Chrome. MV3. No background worker, no dependencies, no
+network calls.
 
-- **Export** — every open tab as a markdown list, grouped by window, deduped,
-  pinned/internal pages skipped. Copy or download a timestamped `.md` file.
-- **Selective** — check/uncheck tabs; every action operates on your selection.
-- **Open selected** — reopen chosen tabs in a fresh window.
-- **Import / reopen** — paste a markdown list or pick a `.md` file and reopen
-  all its links in a new window.
-- **Merge windows** — consolidate every window's tabs into the current one.
-- **Archive & close** — save the list to Downloads, copy to clipboard, then
-  close the selected tabs.
+## What it does
 
-## Install (load unpacked)
+- Lists every open tab as markdown, grouped by window, deduped, pinned and
+  browser-internal pages skipped
+- Acts on a selection: check/uncheck tabs, then Open (new window), Copy,
+  Download, or Archive & close
+- Import: paste a list or pick a .md file, reopen all links in a new window
+- Merges all windows into the current one
+- Archive & close: saves the list to Downloads, copies it to clipboard, closes
+  the selected tabs
 
-1. `brave://extensions` (or `chrome://extensions`)
-2. Enable **Developer mode**
-3. **Load unpacked** → select this folder
-4. Pin it from the extensions menu for one-click access
+## Install
 
-## Usage
+1. Open brave://extensions (or chrome://extensions)
+2. Enable Developer mode
+3. Load unpacked, select this folder
+4. Pin the toolbar icon
 
-Click the toolbar icon → the popup lists your tabs with favicons and
-checkboxes. Select what you want and pick an action: Open / Copy / Download /
-Archive & close. The **Import** tab accepts pasted links or a `.md` file.
+## Permissions
 
-## Privacy
-
-Everything stays on your machine. No network calls, no data collection, no
-permissions beyond `tabs` (needed to read tab titles/URLs).
+One: "tabs" (reads tab titles and URLs). Nothing leaves your machine.
 
 ## License
 
