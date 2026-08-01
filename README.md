@@ -10,6 +10,8 @@ network calls.
 
 - Lists every open tab as markdown, grouped by window, deduped, pinned and
   browser-internal pages skipped
+- Strips common tracking params (utm_*, click IDs, and similar noise); Google
+  search links are collapsed to the query
 - Acts on a selection: check/uncheck tabs, then Open (new window), Copy,
   Download, or Archive & close
 - Import: paste a list or pick a .md file, reopen all links in a new window

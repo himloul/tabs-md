@@ -1,12 +1,52 @@
+const TRACKING = new Set([
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id',
+  'utm_reader', 'utm_referrer', 'utm_cid',
+  'fbclid', 'gclid', 'gbraid', 'wbraid', 'msclkid', 'dclid', 'yclid', 'igshid',
+  'twclid', 'mc_cid', 'mc_eid', 's_kwcid', 'li_fat_id', 'vero_conv', 'vero_id',
+  'epik', '_hsenc', '_hsmi', 'mkt_tok', 'spm', 'pi', 'scm', 'gatewayAdapt',
+  'mtm_source', 'mtm_medium', 'mtm_campaign', 'mtm_term', 'mtm_content', 'mtm_id',
+  'mtm_group', 'mtm_kwd', 'mtm_cid', 'mtm_keyword'
+]);
+
+const TRACKING_PREFIX = ['algo_', 'pdp_'];
+
+const SITE_RULES = [
+  { hosts: ['google.com', 'www.google.com'], path: '/search', keep: ['q'], dropHash: true }
+];
+
+const cleanUrl = (u) => {
+  try {
+    const url = new URL(u);
+    let removed = false;
+    for (const k of [...url.searchParams.keys()]) {
+      if (TRACKING.has(k) || TRACKING_PREFIX.some(p => k.startsWith(p))) {
+        url.searchParams.delete(k);
+        removed = true;
+      }
+    }
+    const host = url.hostname;
+    for (const rule of SITE_RULES) {
+      if (!rule.hosts.includes(host) || url.pathname !== rule.path) continue;
+      const keep = new Set(rule.keep);
+      for (const k of [...url.searchParams.keys()]) {
+        if (!keep.has(k)) { url.searchParams.delete(k); removed = true; }
+      }
+      if (rule.dropHash && url.hash) { url.hash = ''; removed = true; }
+    }
+    return removed ? url.toString() : u;
+  } catch { return u; }
+};
+
 const getTabs = async () => {
   const tabs = await chrome.tabs.query({});
   const seen = new Set();
   const rows = [];
   for (const t of tabs) {
     if (!t.url || !t.url.startsWith('http') || t.pinned) continue;
-    if (seen.has(t.url)) continue;
-    seen.add(t.url);
-    rows.push({ id: t.id, title: t.title || t.url, url: t.url, windowId: t.windowId, favIconUrl: t.favIconUrl || '' });
+    const url = cleanUrl(t.url);
+    if (seen.has(url)) continue;
+    seen.add(url);
+    rows.push({ id: t.id, title: t.title || t.url, url, windowId: t.windowId, favIconUrl: t.favIconUrl || '' });
   }
   return rows;
 };
@@ -24,7 +64,7 @@ const markdown = (rows) => {
 };
 
 const extractUrls = (text) => [...new Set(
-  (text.match(/https?:\/\/[^\s)\]">]+/g) || []).map(u => u.replace(/[.,;!?]+$/, ''))
+  (text.match(/https?:\/\/[^\s)\]">]+/g) || []).map(u => cleanUrl(u.replace(/[.,;!?]+$/, '')))
 )];
 
 const listEl = document.getElementById('list');
