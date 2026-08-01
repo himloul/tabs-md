@@ -15,7 +15,7 @@ network calls.
 - Acts on a selection: check/uncheck tabs, then Open (new window), Copy,
   Download, or Archive & close
 - Import: paste a list or pick a .md file, reopen all links in a new window
-- Merges all windows into the current one
+- Merges this browser's windows into the current one
 - Archive & close: saves the list to Downloads, copies it to clipboard, closes
   the selected tabs
 
